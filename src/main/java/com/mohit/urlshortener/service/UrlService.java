@@ -7,6 +7,8 @@ import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 @Service
@@ -20,6 +22,7 @@ public class UrlService {
     private static final long TTL_SECONDS = 60 * 60;
 
     public String generateShortCode(String longUrl) {
+        longUrl = URLDecoder.decode(longUrl, StandardCharsets.UTF_8);
         String shortCode = Base62.encode(longUrl.hashCode());
         redisCommands.setex(shortCode, TTL_SECONDS, longUrl);
         urlRepository.save(new UrlEntity(longUrl, shortCode, LocalDateTime.now()));

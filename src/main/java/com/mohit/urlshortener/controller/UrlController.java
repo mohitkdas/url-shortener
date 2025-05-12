@@ -1,7 +1,5 @@
 package com.mohit.urlshortener.controller;
 
-import com.mohit.urlshortener.model.UrlEntity;
-import com.mohit.urlshortener.repository.UrlRepository;
 import com.mohit.urlshortener.service.UrlService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -10,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
@@ -18,12 +15,12 @@ import java.time.LocalDateTime;
 public class UrlController {
 
     private final UrlService urlService;
-    private final UrlRepository urlRepository;
 
     @PostMapping("/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
+        longUrl = longUrl.replaceAll("=$", "");
         String shortCode = urlService.generateShortCode(longUrl);
-        return ResponseEntity.ok("http://54.211.18.213:80/" + shortCode);
+        return ResponseEntity.ok("http://54.211.18.213/" + shortCode);
     }
 
     @GetMapping("/{shortCode}")
