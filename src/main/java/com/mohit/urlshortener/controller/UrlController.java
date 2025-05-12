@@ -23,7 +23,6 @@ public class UrlController {
     @PostMapping("/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
         String shortCode = urlService.generateShortCode(longUrl);
-        urlRepository.save(new UrlEntity(shortCode, longUrl, LocalDateTime.now()));
         return ResponseEntity.ok("http://54.211.18.213:80/" + shortCode);
     }
 
