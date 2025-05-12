@@ -26,7 +26,7 @@ public class UrlEntity {
     private String shortCode;
     private LocalDateTime createdAt;
 
-    public UrlEntity(String shortCode, String longUrl, LocalDateTime now) {
+    public UrlEntity(String longUrl, String shortCode, LocalDateTime now) {
         this.longUrl = longUrl;
         this.shortCode = shortCode;
         this.createdAt = now;
