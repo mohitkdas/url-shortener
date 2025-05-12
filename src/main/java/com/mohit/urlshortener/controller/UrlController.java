@@ -30,7 +30,7 @@ public class UrlController {
     public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
         String longUrl = urlService.getLongUrl(shortCode);
         response.sendRedirect(longUrl);
-        return ResponseEntity.status(HttpStatus.FOUND).build();
+        return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).build();
     }
 
 }
