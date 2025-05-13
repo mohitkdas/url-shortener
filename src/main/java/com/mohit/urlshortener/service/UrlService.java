@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class UrlService {
 
     private UrlRepository urlRepository;
+    private CounterService counterService;
 
     private RedisAdvancedClusterCommands<String, String> redisCommands;
 
@@ -23,8 +24,9 @@ public class UrlService {
 
     public String generateShortCode(String longUrl) {
         longUrl = URLDecoder.decode(longUrl, StandardCharsets.UTF_8);
-        String shortCode = Base62.encode(longUrl.hashCode());
-        redisCommands.setex(shortCode, TTL_SECONDS, longUrl);
+
+        long nextId = counterService.getNextId();
+        String shortCode = Base62.encode(nextId);
         urlRepository.save(new UrlEntity(longUrl, shortCode, LocalDateTime.now()));
         return shortCode;
     }
@@ -35,8 +37,11 @@ public class UrlService {
             return cachedUrl;
         }
 
-        return urlRepository.findByShortCode(shortCode)
+        String longUrl = urlRepository.findByShortCode(shortCode)
                 .map(UrlEntity::getLongUrl)
                 .orElseThrow(() -> new RuntimeException("URL not found"));
+
+        redisCommands.setex(shortCode, TTL_SECONDS, longUrl);
+        return longUrl;
     }
 }
