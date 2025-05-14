@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'openjdk'
 
       # Step 3: Build the JAR file
       - name: Build JAR
