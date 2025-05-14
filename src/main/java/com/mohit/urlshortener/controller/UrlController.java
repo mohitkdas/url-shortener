@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 @AllArgsConstructor
 public class UrlController {
 
     private final UrlService urlService;
 
-    @PostMapping("/shorten")
+    @PostMapping("/api/v1/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
         longUrl = longUrl.replaceAll("=$", "");
         String shortCode = urlService.generateShortCode(longUrl);
