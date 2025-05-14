@@ -36,7 +36,7 @@ jobs:
         id: jarfile
         run: |
           JAR_NAME=$(ls target/*.jar | tail -n 1)
-          echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
+          echo "JAR_NAME=$(basename $JAR_NAME)" >> $GITHUB_ENV
 
       # Step 6: Transfer the latest JAR to EC2
       - name: Transfer JAR to EC2
@@ -48,5 +48,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} << 'EOF'
           pkill -f 'java -jar' || true
-          nohup java -jar /home/${{ secrets.AWS_USER }}/$(basename $JAR_NAME) > app.log 2>&1 &
+          nohup java -jar /home/${{ secrets.AWS_USER }}/${{ env.JAR_NAME }} > app.log 2>&1 &
           EOF
