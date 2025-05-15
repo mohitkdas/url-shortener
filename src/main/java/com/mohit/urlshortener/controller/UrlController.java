@@ -20,6 +20,7 @@ public class UrlController {
 
     @PostMapping("/api/v1/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
+        log.info("Received long URL: {}", longUrl);
         longUrl = longUrl.replaceAll("=$", "");
         String shortCode = urlService.generateShortCode(longUrl);
         return ResponseEntity.ok("http://54.211.18.213/" + shortCode);
@@ -27,6 +28,7 @@ public class UrlController {
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
+        log.info("Redirecting short code: {}", shortCode);
         String longUrl = urlService.getLongUrl(shortCode);
         response.sendRedirect(longUrl);
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).build();
