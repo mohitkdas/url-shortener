@@ -2,7 +2,7 @@ package com.mohit.urlshortener.util;
 
 public class Base62 {
 
-    private static final String BASE62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     public static String encode(long num) {
         StringBuilder sb = new StringBuilder();
