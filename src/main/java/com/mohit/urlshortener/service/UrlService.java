@@ -37,7 +37,7 @@ public class UrlService {
 
         String longUrl = urlRepository.findByShortCode(shortCode)
                 .map(UrlEntity::getLongUrl)
-                .orElseThrow(() -> new RuntimeException("URL not found"));
+                .orElseThrow(() -> new RuntimeException("URL not found for: " + shortCode));
 
         redisCommands.set(shortCode, longUrl);
         return longUrl;
