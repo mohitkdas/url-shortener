@@ -3,6 +3,7 @@ package com.mohit.urlshortener.controller;
 import com.mohit.urlshortener.service.UrlService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 @AllArgsConstructor
+@Slf4j
 public class UrlController {
 
     private final UrlService urlService;
@@ -25,6 +27,7 @@ public class UrlController {
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
+        log.info("Request received for shortcode {}.", shortCode);
         String longUrl = urlService.getLongUrl(shortCode);
         response.sendRedirect(longUrl);
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).build();

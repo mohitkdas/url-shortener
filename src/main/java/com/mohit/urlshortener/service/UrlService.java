@@ -20,8 +20,6 @@ public class UrlService {
 
     private RedisAdvancedClusterCommands<String, String> redisCommands;
 
-    private static final long TTL_SECONDS = 60 * 60;
-
     public String generateShortCode(String longUrl) {
         longUrl = URLDecoder.decode(longUrl, StandardCharsets.UTF_8);
 
@@ -41,7 +39,7 @@ public class UrlService {
                 .map(UrlEntity::getLongUrl)
                 .orElseThrow(() -> new RuntimeException("URL not found"));
 
-        redisCommands.setex(shortCode, TTL_SECONDS, longUrl);
+        redisCommands.set(shortCode, longUrl);
         return longUrl;
     }
 }
