@@ -23,8 +23,6 @@ public class UrlService {
     private RedisAdvancedClusterCommands<String, String> redisCommands;
 
     public String generateShortCode(String longUrl) {
-        longUrl = URLDecoder.decode(longUrl, StandardCharsets.UTF_8);
-
         long nextId = counterService.getNextId();
         log.info("Decoded long URL: {}", longUrl);
         String shortCode = Base62.encode(nextId);

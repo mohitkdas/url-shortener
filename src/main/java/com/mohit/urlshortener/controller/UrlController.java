@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -28,9 +29,9 @@ public class UrlController {
             @ApiResponse(responseCode = "200", description = "Successfully shortened the URL")
     })
     @PostMapping("/api/v1/shorten")
-    public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
+    public ResponseEntity<String> shortenUrl(@RequestBody Map<String, String> payload) {
+        String longUrl = payload.get("longUrl");
         log.info("Received long URL: {}", longUrl);
-        longUrl = longUrl.replaceAll("=$", "");
         String shortCode = urlService.generateShortCode(longUrl);
         return ResponseEntity.ok("http://54.211.18.213/" + shortCode);
     }
