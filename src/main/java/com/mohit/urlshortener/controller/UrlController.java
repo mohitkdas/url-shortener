@@ -33,7 +33,7 @@ public class UrlController {
         String longUrl = payload.get("longUrl");
         log.info("Received long URL: {}", longUrl);
         String shortCode = urlService.generateShortCode(longUrl);
-        return ResponseEntity.ok("http://54.211.18.213/" + shortCode);
+        return ResponseEntity.ok("http://54.211.18.213/api/" + shortCode);
     }
 
     @Operation(summary = "Redirect to long URL", description = "Redirects the shortened URL to the original long URL")
@@ -41,7 +41,7 @@ public class UrlController {
             @ApiResponse(responseCode = "302", description = "Successfully redirected"),
             @ApiResponse(responseCode = "404", description = "Short URL not found")
     })
-    @GetMapping("/{shortCode}")
+    @GetMapping("/api/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
         log.info("Redirecting short code: {}", shortCode);
         String longUrl = urlService.getLongUrl(shortCode);
