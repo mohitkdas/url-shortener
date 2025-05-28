@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "URL Shortener", description = "APIs for URL shortening and redirection")
@@ -28,7 +28,7 @@ public class UrlController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully shortened the URL")
     })
-    @PostMapping("/api/v1/shorten")
+    @PostMapping("/v1/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody Map<String, String> payload) {
         String longUrl = payload.get("longUrl");
         log.info("Received long URL: {}", longUrl);
@@ -41,7 +41,7 @@ public class UrlController {
             @ApiResponse(responseCode = "302", description = "Successfully redirected"),
             @ApiResponse(responseCode = "404", description = "Short URL not found")
     })
-    @GetMapping("/api/{shortCode}")
+    @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletResponse response) throws IOException {
         log.info("Redirecting short code: {}", shortCode);
         String longUrl = urlService.getLongUrl(shortCode);
