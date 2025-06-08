@@ -33,7 +33,7 @@ public class UrlController {
         String longUrl = payload.get("longUrl");
         log.info("Received long URL: {}", longUrl);
         String shortCode = urlService.generateShortCode(longUrl);
-        return ResponseEntity.ok("http://54.211.18.213/api/" + shortCode);
+        return ResponseEntity.ok("http://ushort.live/api/" + shortCode);
     }
 
     @Operation(summary = "Redirect to long URL", description = "Redirects the shortened URL to the original long URL")
