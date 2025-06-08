@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RedisConfig {
 
-    private static final String REDIS_URI = "rediss://clustercfg.url-shortener.yq50wk.use1.cache.amazonaws.com:6379";
+    private static final String REDIS_URI = "rediss://clustercfg.redis-cache.yq50wk.use1.cache.amazonaws.com:6379";
 
     @Bean
     public RedisAdvancedClusterCommands<String, String> redisCommands() {

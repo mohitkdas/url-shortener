@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CounterRedisConfig {
 
-    private static final String COUNTER_REDIS_URI = "rediss://clustercfg.counter.yq50wk.use1.cache.amazonaws.com:6379";
+    private static final String COUNTER_REDIS_URI = "rediss://clustercfg.redis-cache.yq50wk.use1.cache.amazonaws.com:6379";
 
     @Bean
     public RedisCommands<String, String> counterCommands() {
